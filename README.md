@@ -48,8 +48,8 @@ cd TaskManagerApp
 - Sync Gradle and run the app on a real device or emulator.  
 
 ---
-## 📸 Application UI
- 
+## 📌 Application UI and Working Demo
+- 🚀 **App Video Demonstration Video:** [DropBox_Link](https://www.dropbox.com/scl/fi/bmo5jujj9gw6kq1srhjil/VN20250404_174730.mp4?rlkey=8chdnmsf4ezw4j5dykedfsamu&st=kwaqjkbl&dl=0) 
 
 ## 📸 Screenshots & Video  
 
@@ -75,7 +75,6 @@ cd TaskManagerApp
 
 - 📂 **GitHub Repository:** [Yuvaraj-Rathod/TaskManagerApp](https://github.com/Yuvaraj-Rathod/Assignment_TaskManager)
 - 🔥 **JSONBin API Endpoint:** [Click Here](https://api.jsonbin.io/v3/b/66f5687ce41b4d34e43839b0?meta=false)
-- 🚀 **App Video Demonstration Video:**[DropBox_Link](https://www.dropbox.com/scl/fi/bmo5jujj9gw6kq1srhjil/VN20250404_174730.mp4?rlkey=8chdnmsf4ezw4j5dykedfsamu&st=kwaqjkbl&dl=0)
 
 
 
