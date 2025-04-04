@@ -5,6 +5,8 @@ plugins {
     id("com.google.gms.google-services")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -51,6 +53,9 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation (libs.firebase.firestore.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.perf.ktx)
+
 
     //viewmodel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -63,6 +68,14 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
     //Room
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
@@ -71,6 +84,9 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.compose.bom.v20240300))
+
+    //Lottie
+    implementation(libs.lottie.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

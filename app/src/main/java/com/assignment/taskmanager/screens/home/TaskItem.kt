@@ -31,6 +31,7 @@ fun TaskItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .height(65.dp)
             .clickable {
                 isChecked = !isChecked
                 onToggleComplete()
