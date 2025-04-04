@@ -1,5 +1,9 @@
 package com.assignment.taskmanager.screens.home
 
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,6 +34,7 @@ import com.google.firebase.ktx.Firebase
 fun TaskScreen(viewModel: TaskViewModel = hiltViewModel()) {
     val navController = rememberNavController()
     val tasks by viewModel.tasks.collectAsState()
+    val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
     var taskTitle by remember { mutableStateOf("") }
 
@@ -59,7 +65,6 @@ fun TaskScreen(viewModel: TaskViewModel = hiltViewModel()) {
                 .padding(paddingValues)
                 .padding(horizontal = 10.dp, vertical = 12.dp)
         ) {
-            // Section Title
             Text(
                 text = "🧠 Productivity Tips",
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -68,10 +73,7 @@ fun TaskScreen(viewModel: TaskViewModel = hiltViewModel()) {
                 ),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
-
             TipsSection()
-
-            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = "📝 Your Tasks",
@@ -92,20 +94,43 @@ fun TaskScreen(viewModel: TaskViewModel = hiltViewModel()) {
                     EmptyTaskAnimation()
                 }
             } else {
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.weight(1f)
+                ) {
                     items(tasks) { task ->
                         TaskItem(
                             task,
-                            onToggleComplete = { viewModel.toggleTaskCompletion(task) },
-                            onDelete = { viewModel.deleteTask(task.id) }
+                            onToggleComplete = {
+                                viewModel.toggleTaskCompletion(task)
+                                showToast(context, "Task '${task.title}' updated!")
+                            },
+                            onDelete = {
+                                viewModel.deleteTask(task.id)
+                                showToast(context, "Task '${task.title}' deleted!")
+                            }
                         )
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 🔥 Crash button for testing Firebase Crashlytics
+            Button(
+                onClick = {
+                    throw RuntimeException("🔥 Test Crash from Home Screen")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+            ) {
+                Text("Force Crash (Test)")
+            }
         }
     }
 
-    // Dialog to enter task name
+    // Dialog for adding a new task
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
@@ -128,6 +153,7 @@ fun TaskScreen(viewModel: TaskViewModel = hiltViewModel()) {
                     onClick = {
                         if (taskTitle.isNotBlank()) {
                             viewModel.addTask(taskTitle)
+                            showToast(context, "Task '$taskTitle' added!")
                             taskTitle = ""
                             showDialog = false
                         }
@@ -145,6 +171,16 @@ fun TaskScreen(viewModel: TaskViewModel = hiltViewModel()) {
         )
     }
 }
+
+/**
+ * Utility function to show Toast safely on the UI thread.
+ */
+fun showToast(context: Context, message: String) {
+    Handler(Looper.getMainLooper()).post {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+}
+
 
 
 @Composable
