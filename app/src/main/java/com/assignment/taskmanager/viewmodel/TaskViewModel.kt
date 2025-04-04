@@ -2,8 +2,8 @@ package com.assignment.taskmanager.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.assignment.taskmanager.model.Task
 import com.assignment.taskmanager.repository.TaskRepository
+import com.assignment.taskmanager.room.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

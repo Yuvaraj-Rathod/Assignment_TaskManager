@@ -16,7 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
-import com.assignment.taskmanager.model.Task
+import com.assignment.taskmanager.room.Task
+
 
 @Composable
 fun TaskItem(

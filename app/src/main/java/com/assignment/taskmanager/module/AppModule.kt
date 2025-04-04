@@ -2,6 +2,7 @@ package com.assignment.taskmanager.module
 
 import android.content.Context
 import com.assignment.taskmanager.repository.TaskRepository
+import com.assignment.taskmanager.room.TaskDao
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -29,8 +30,9 @@ object AppModule {
     @Singleton
     fun provideTaskRepository(
         firestore: FirebaseFirestore,
-        analytics: FirebaseAnalytics
+        analytics: FirebaseAnalytics,
+        taskDao: TaskDao
     ): TaskRepository {
-        return TaskRepository(firestore, analytics)
+        return TaskRepository(firestore, analytics, taskDao)
     }
 }
