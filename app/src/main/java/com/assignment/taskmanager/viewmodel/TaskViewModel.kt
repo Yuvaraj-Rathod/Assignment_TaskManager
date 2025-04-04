@@ -26,7 +26,7 @@ class TaskViewModel @Inject constructor(private val repository: TaskRepository) 
         viewModelScope.launch {
             val updatedTask = task.copy(isCompleted = !task.isCompleted)
             repository.updateTask(updatedTask)
-        }
+          }
     }
 
     fun deleteTask(taskId: String) {

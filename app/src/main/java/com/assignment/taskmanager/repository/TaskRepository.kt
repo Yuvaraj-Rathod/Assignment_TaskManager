@@ -35,18 +35,14 @@ class TaskRepository @Inject constructor(
 
     //Add a task
     suspend fun addTask(title: String) {
-        val newTaskRef = tasksCollection.document()
-        val task = Task(id = newTaskRef.id, title = title)
-        newTaskRef.set(task).await()
-
-        val bundle = Bundle().apply { putString("task_title", title) }
-        analytics.logEvent("task_added", bundle)
+        val newTaskRef = tasksCollection.document() // Auto-generates unique Firestore ID
+        val task = Task(id = newTaskRef.id, title = title) // Use this ID for the `id` field
+        newTaskRef.set(task).await() // Save task with matching ID
     }
 
     // Update a task
     suspend fun updateTask(task: Task) {
         tasksCollection.document(task.id).set(task).await()
-
         val bundle = Bundle().apply { putString("task_title", task.title) }
         analytics.logEvent("task_completed", bundle)
     }
@@ -54,8 +50,5 @@ class TaskRepository @Inject constructor(
     //Delete a task
     suspend fun deleteTask(taskId: String) {
         tasksCollection.document(taskId).delete().await()
-
-        val bundle = Bundle().apply { putString("task_id", taskId) }
-        analytics.logEvent("task_deleted", bundle)
     }
 }
